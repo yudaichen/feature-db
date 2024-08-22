@@ -1,0 +1,5 @@
+# 忽略所有名字带有 test 的目录
+cmake-build-debug/
+
+# 忽略所有名字带有 test 的目录
+.idea/

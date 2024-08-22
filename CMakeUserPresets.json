@@ -1,0 +1,9 @@
+{
+    "version": 4,
+    "vendor": {
+        "conan": {}
+    },
+    "include": [
+        "/mnt/d/study/cpp/conan_test/cmake/debug/CMakePresets.json"
+    ]
+}

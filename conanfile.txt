@@ -1,0 +1,16 @@
+[requires]
+boost/1.83.0
+nlohmann_json/3.11.3
+glog/0.6.0
+gtest/1.14.0
+dbg-macro/0.5.1
+
+
+[generators]
+CMakeToolchain
+CMakeDeps
+
+[imports]
+include, * -> ./include #imports可以实现这个要求。imports将文件从 ~/.conan 目录复制到指定位置
+bin, *.dll -> ./bin # Copies all dll files from packages bin folder to my local "bin" folder
+lib, *.dylib* -> ./bin # Copies all dylib files from packages lib folder to my local "bin" folder

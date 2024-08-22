@@ -1,0 +1,1 @@
+. "/mnt/d/study/cpp/conan_test/cmake/debug/conanbuildenv-release-x86_64.sh"
