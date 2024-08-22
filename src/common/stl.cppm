@@ -36,8 +36,9 @@ module;
 #include <vector>
 #include <mutex>
 #include <condition_variable>
-
+#include <coroutine>
 #include <algorithm>
+
 export module stl;
 
 export namespace std {
@@ -146,38 +147,38 @@ export namespace std {
     using std::unique;
 
     namespace ranges {
-    using std::ranges::equal;
-    using std::ranges::for_each;
-    }    // namespace ranges
+        using std::ranges::equal;
+        using std::ranges::for_each;
+    } // namespace ranges
 
     using std::decay_t;
     using std::function;
     using std::numeric_limits;
 
     namespace chrono {
-    using std::chrono::duration;
-    using std::chrono::microseconds;
-    using std::chrono::milliseconds;
-    using std::chrono::nanoseconds;
-    using std::chrono::seconds;
-    using std::chrono::system_clock;
+        using std::chrono::duration;
+        using std::chrono::microseconds;
+        using std::chrono::milliseconds;
+        using std::chrono::nanoseconds;
+        using std::chrono::seconds;
+        using std::chrono::system_clock;
 
-    using std::chrono::operator>;
-    using std::chrono::operator>=;
-    using std::chrono::operator<;
-    using std::chrono::operator<=;
-    using std::chrono::operator==;
+        using std::chrono::operator>;
+        using std::chrono::operator>=;
+        using std::chrono::operator<;
+        using std::chrono::operator<=;
+        using std::chrono::operator==;
 
-    using std::chrono::operator+;
-    using std::chrono::operator-;
+        using std::chrono::operator+;
+        using std::chrono::operator-;
 
-    using std::chrono::minutes;
-    using std::chrono::weeks;
-    using std::chrono::years;
+        using std::chrono::minutes;
+        using std::chrono::weeks;
+        using std::chrono::years;
 
-    using std::chrono::steady_clock;
-    using std::chrono::time_point;
-    }    // namespace chrono
+        using std::chrono::steady_clock;
+        using std::chrono::time_point;
+    } // namespace chrono
 
     using std::cerr;
     using std::cout;
@@ -196,7 +197,15 @@ export namespace std {
     using std::static_pointer_cast;
 
     namespace filesystem {
-    using std::filesystem::file_size;
+        using std::filesystem::canonical;
+        using std::filesystem::copy;
+        using std::filesystem::copy_file;
+        using std::filesystem::copy_options;
+        using std::filesystem::exists;
+        using std::filesystem::file_size;
+        using std::filesystem::path;
+        using std::filesystem::remove;
+        using std::filesystem::remove_all;
     }
 
     using std::iota;
@@ -226,16 +235,30 @@ export namespace std {
 
     using std::function;
     using std::optional;
+#if __cplusplus > 202002L && __cpp_concepts >= 202002L
+    using std::expected;
+#endif
+
     using std::monostate;
+    using std::nullptr_t;
 
     using std::async;
     using std::future;
     using std::jthread;
     using std::promise;
     using std::thread;
+
     namespace this_thread {
-    using std::this_thread::sleep_for;
+        using std::this_thread::sleep_for;
     }
 
     using std::atomic_flag;
-}    // namespace std
+
+
+    //协程
+    using std::coroutine_traits;
+    using std::coroutine_handle;
+    using std::noop_coroutine;
+    using std::suspend_never;
+    using std::suspend_always;
+} // namespace std

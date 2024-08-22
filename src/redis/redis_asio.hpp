@@ -52,12 +52,12 @@ asio::awaitable<void> simplePingClient()
     {
         tcp::socket socket(co_await asio::this_coro::executor);
 
-        co_await socket.async_connect(tcp::endpoint(asio::ip::make_address("101.43.58.72"), 6379), asio::use_awaitable);
+        co_await socket.async_connect(tcp::endpoint(asio::ip::make_address("****ip***"), 6379), asio::use_awaitable);
 
         std::cout << "Connected to Redis server!" << std::endl;
 
         {
-            std::string command_auth = "*2\r\n$4\r\nAUTH\r\n$9\r\nydc061588\r\n";
+            std::string command_auth = "*2\r\n$4\r\nAUTH\r\n$9\r\npassword\r\n";
             co_await asio::async_write(socket, asio::buffer(command_auth), asio::use_awaitable);
 
             char reply_auth[1024];

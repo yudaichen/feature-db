@@ -100,7 +100,7 @@ endif ()
 
 # 使用test文件
 set(USE_TEST true)
-
+set(UES_PRECOMPILE true)
 
 # 寻找第三方包
 find_package(Boost REQUIRED)

@@ -12,8 +12,9 @@ import stl;
 int main(int argc, char **argv) {
     Log::instance(argv[0]);
 
+    std::cout << std::format("version __cplusplus{}, __cpp_concepts {}",__cplusplus,__cpp_concepts);
     /*redis_asio_connect();
-    std::map<int, std::map<std::string, double>> nestedMap{
+    std::map<int, std::map<std::string, double>> nestedMap
             {1, {{"a", 1.1}, {"b", 2.2}}},
             {2, {{"c", 3.3}, {"d", 4.4}}},
             {3, {{"e", 5.5}, {"f", 6.6}}}
