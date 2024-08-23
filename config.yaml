@@ -1,0 +1,8 @@
+server:
+  raft:
+    - node:
+      ip: 127.0.0.1:443
+      id: server-01
+    - node:
+      ip: 192.168.0.1:443
+      id: server-02

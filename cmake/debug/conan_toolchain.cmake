@@ -35,7 +35,7 @@ string(APPEND CONAN_EXE_LINKER_FLAGS " -m64")
 
 message(STATUS "Conan toolchain: C++ Standard 23 with extensions ON")
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_EXTENSIONS ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Extra c, cxx, linkflags and defines

@@ -2,11 +2,12 @@ module;
 
 
 import stl;
+import expected;
 #include "yaml-cpp/yaml.h"
 
 export module packet;
 
-namespace fast::raft {
+export namespace fast::raft {
     // 日志
     struct Log {
         int         index     = -1;    // 日志记录的索引
@@ -60,30 +61,34 @@ namespace fast::raft {
     struct RaftNodeConfig {
         std::string ip;   //ip地址
         std::string port; //端口号
+        std::string id;   //端口号
     };
 
-   std::vector<RaftNodeConfig> GetRaftNodeConfig(const std::string& fileName) {
-       std::vector<RaftNodeConfig> result;
-        /*
+    // 从 YAML 节点中加载 Node 对象
+    inline void loadNode(const YAML::Node &node, RaftNodeConfig &result) {
+        result.ip = node["ip"].as<std::string>();
+        result.ip = node["port"].as<std::string>();
+        result.id = node["id"].as<std::string>();
+    }
+
+    fast::util::expected<std::vector<RaftNodeConfig>, std::string> GetRaftNodeConfig(const std::string &fileName) {
         YAML::Node config = YAML::LoadFile(fileName);
         if (!config) {
-            std::cout << "Open config File:" << fileName << " failed.";
-            return false;
-        }
-        if (!config["transform"]) {
-            std::cout << "Open config File:" << fileName << " has no transform.";
-            return nullptr;
+            return {"Open config File:" + fileName + " failed."};
         }
 
-        if (config["transform"]["translation"]) {
-            // 读取yaml文件中的transform下的translation的x的值
-            x_ = config["transform"]["translation"]["x"].as<float>();
-        } else {
-            std::cout << "config File:" << file_name << " has no transform:translation.";
-            return false;
+        // 读取config
+        try {
+            const auto &                raftNodes = config["server"]["raft"];
+            std::vector<RaftNodeConfig> result;
+            for (const auto &raftNode: raftNodes) {
+                RaftNodeConfig configNode;
+                loadNode(raftNode["node"], configNode);
+                result.push_back(configNode);
+            }
+            return result;
+        } catch (const YAML::Exception &e) {
+            return {std::string("Error parsing YAML file: ") + e.what()};
         }
-        */
-
-        return result;
     }
 }

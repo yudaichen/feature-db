@@ -8,7 +8,8 @@ project(${APP_NAME})
 
 #c++23 标准
 set(CMAKE_CXX_STANDARD 23)
-
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # 强制使用 C++20 标准
+set(CMAKE_CXX_EXTENSIONS OFF)       # 不使用编译器特定扩展
 
 #用于指定 CMake 是否将扫描目标中C++源以查找模块依赖项
 #https://cmake.org/cmake/help/latest/prop_tgt/CXX_SCAN_FOR_MODULES.html#prop_tgt:CXX_SCAN_FOR_MODULES

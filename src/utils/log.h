@@ -14,44 +14,49 @@
 // 打印堆栈
 #include <boost/stacktrace.hpp>
 
+// ANSI color codes
+#define RED    = "\033[31m";
+#define GREEN  = "\033[32m";
+#define YELLOW = "\033[33m";
+
 
 #ifdef GOOGLE_LOG
 using namespace google;
 
 #define LOG_DEBUG_R\
-           LOG(INFO)
+           LOG(INFO)<<"\033[33m"
 #define LOG_INFO_R\
-           LOG(INFO)
+           LOG(INFO) <<"\033[32m"
 #define LOG_WARNING_R\
-           LOG(WARNING)
+           LOG(WARNING)<<"\033[33m"
 #define LOG_ERROR_R\
-           LOG(ERROR)
+           LOG(ERROR)<<"\033[31m"
 #define LOG_FATAL_R\
-        LOG(FATAL)
+        LOG(FATAL)<<"\033[31m"
 #define LOG_STACK_R\
-           LOG(ERROR) <<  boost::stacktrace::stacktrace()
+           LOG(ERROR) << boost::stacktrace::stacktrace()
 
 #else
 #define LOG_DEBUG\
-    std::cout
+    std::cout<< YELLOW
 #define LOG_INFO\
-    std::cout
+    std::cout<< GREEN
 #define LOG_WARNING\
-    std::cout
+    std::cout<< YELLOW
 #define LOG_ERROR\
-    std::cout
+    std::cout<< RED
 #define LOG_FATAL\
-    std::cout
+    std::cout<< RED
 #define LOG_STACK\
-    std::cout
+    std::cout<< RED
 #endif
 
 class Log {
-
 public:
-
     static void instance(const char *slogName = nullptr) {
 #ifdef GOOGLE_LOG
+        //setenv("GLOG_colorlogtostderr", "1", 1);
+
         static int g_instance = 0;
 
         // 只初始化一次
@@ -67,7 +72,7 @@ public:
         }
         google::InitGoogleLogging(gLogName);
 
-        g_instance = 1;
+        g_instance        = 1;
         const char *slash = strrchr(gLogName, '/');
 
 #ifdef _WIN32
@@ -76,7 +81,7 @@ public:
 
 
         time_t timestamp = time(NULL);
-        tm *tm_time = localtime(&timestamp);
+        tm *   tm_time   = localtime(&timestamp);
 
         //日志文件名定
         sprintf(gLogFileName,
@@ -98,7 +103,7 @@ public:
         //google::SetLogDestination(google::GLOG_FATAL, "./log_");
 
         //强制退出时打印堆栈
-        google::InstallFailureSignalHandler();     // 配置安装程序崩溃失败信号处理器
+        google::InstallFailureSignalHandler(); // 配置安装程序崩溃失败信号处理器
 
         // 后缀名称
         google::SetLogFilenameExtension(".log");
@@ -119,7 +124,7 @@ public:
         FLAGS_stop_logging_if_full_disk = true;
 
         //实时输出日志
-        FLAGS_logbufsecs = 0;  // Set log output speed(s)
+        FLAGS_logbufsecs = 0; // Set log output speed(s)
 
         //文件最大输出
         //FLAGS_max_log_size = 1024;  // Set max log file size
@@ -134,9 +139,9 @@ public:
     // 扑捉到程序崩溃或者中断时，把相应的信息打印到log文件和输出到屏幕。
     static void SignalHandler(const char *data, size_t size) {
 #ifdef GOOGLE_LOG
-        std::string glog_file = "./error.log";
+        std::string   glog_file = "./error.log";
         std::ofstream fs(glog_file, std::ios::app);
-        std::string str = std::string(data, size);
+        std::string   str = std::string(data, size);
         fs << str;
         fs.close();
         LOG(INFO) << str;
@@ -149,6 +154,4 @@ public:
         google::ShutdownGoogleLogging();
 #endif
     }
-
-
 };
